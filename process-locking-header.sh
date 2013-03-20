@@ -8,7 +8,7 @@ SCRIPTNAME="${0}"
 if [ -e "${LOCKSDIR}/$SCRIPTNAME.ok" ];then
         mv ${LOCKSDIR}/$SCRIPTNAME.ok ${LOCKSDIR}/$SCRIPTNAME.running
         touch ${LOCKSDIR}/$SCRIPTNAME.running
-        /usr/bin/logger Starting $SCRIPTNAME 
+        /usr/bin/logger "Starting $SCRIPTNAME" 
 else   
         if [ -e "${LOCKSDIR}/$SCRIPTNAME.running" ];then
                 echo "Exiting because process is already running"
