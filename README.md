@@ -17,17 +17,21 @@ By using the "source" command to include this header and footer into my scripts,
 ***
 ###HOW TO USE:
 
-Create a directory where the process locking files will reside. The user your script(s) run as must have read and write permissions.
+###1. Create a directory where the process locking files will reside. 
+The user your script(s) run as must have read and write permissions.
 
-Configure process-locking-header.sh to point to the directory you created to hold the process locking files. Do not end the path with a /
+###2. Configure process-locking-header.sh to point to that dir. 
+Do not end the path with a /
+
+###3. In your script, source the header and footer files:
 
 Near the top of your script (but below #!/bin/bash), insert a line such as:
 
-source /path/to/process-locking-header.sh
+```source /path/to/process-locking-header.sh```
 
 At the bottom of your script, insert a line such as:
 
-source /path/to/process-locking-footer.sh
+```source /path/to/process-locking-footer.sh```
 
 Run your script once. It will not execute other than to create one file in the process locking dir.
 
