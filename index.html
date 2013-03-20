@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Process-locking by secure411dotorg</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Process-locking</h1>
+        <p class="header">bash - Prevent a process from running multiple times</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/secure411dotorg/process-locking/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/secure411dotorg/process-locking/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/secure411dotorg/process-locking">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/secure411dotorg">secure411dotorg</a></p>
+
+
+      </header>
+      <section>
+        <h1>process-locking</h1>
+
+<p>bash - Prevent a process from running multiple times</p>
+
+<hr><h3>PROBLEM INTENDED TO SOLVE:</h3>
+
+<p>I need to run bash scripts on crontab, some even every minute. They may take longer than a minute to run, and they need to run again as soon as the last run successfully completes. I have tried many different solutions to this and finally wrote this universal header and footer file because every other solution failed at one time or another. </p>
+
+<p>The centralized lock file dir lets me see at a glance which of my scripts are running and for how long. The logging gives the opportunity for potential automated graphing and monitoring of process duration / status.</p>
+
+<p>By using the "source" command to include this header and footer into my scripts, I can improve or configure the file in one spot without re-editing hundreds of scripts. No configuration is needed when writing new scripts, just include the two "source" lines, one at top and one at bottom. Bytes are saved through code re-use.</p>
+
+<hr><h3>HOW TO USE:</h3>
+
+<h3>1. Create a directory where the process locking files will reside.</h3>
+
+<p>The user your script(s) run as must have read and write permissions.</p>
+
+<h3>2. Configure process-locking-header.sh to point to that dir.</h3>
+
+<p>Do not end the path with a /</p>
+
+<h3>3. In your script, source the header and footer files:</h3>
+
+<p>Near the top of your script (but below #!/bin/bash), insert a line such as:</p>
+
+<p><code>source /path/to/process-locking-header.sh</code></p>
+
+<p>At the bottom of your script, insert a line such as:</p>
+
+<p><code>source /path/to/process-locking-footer.sh</code></p>
+
+<p>Run your script once. It will not execute other than to create one file in the process locking dir.</p>
+
+<p>The next time your script runs, it will fully execute as expected. Checking the log where your /usr/bin/logger points (such as syslog) you will see an entry for the start and end times of your script.</p>
+
+<p>If you try to run your script while it is still running, you will see a message saying that the script is already running, and it will exit rather than run a second copy.</p>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
+  </body>
+</html>
