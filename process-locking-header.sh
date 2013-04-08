@@ -3,7 +3,7 @@ LOCKSDIR="/home/ubuntu/locks"
 #
 # Nothing below here needs configuration
 #
-SCRIPTNAME="${0}"
+SCRIPTNAME=`echo "${0}"|rev|cut -d"/" -f1|rev`
 
 if [ -e "${LOCKSDIR}/$SCRIPTNAME.ok" ];then
         mv ${LOCKSDIR}/$SCRIPTNAME.ok ${LOCKSDIR}/$SCRIPTNAME.running
