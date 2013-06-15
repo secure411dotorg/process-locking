@@ -45,6 +45,9 @@ If you try to run your script while it is still running, you will see a message 
 ###Legal Notices re GPLv3 Licensing
 
     Copyright (C) 2012 April Lorenzen
+    
+    Paper mail contact: April Lorenzen, PO Box 293, Jamestown RI 02835
+    Electronic contact: https://github.com/secure411dotorg/process-locking/issues
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
