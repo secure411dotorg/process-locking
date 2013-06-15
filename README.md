@@ -3,6 +3,7 @@ process-locking
 
 bash - Prevent a process from running multiple times
 
+[Legal and License GPLv3](#license)
 
 ***
 ###PROBLEM INTENDED TO SOLVE:
@@ -39,3 +40,21 @@ The next time your script runs, it will fully execute as expected. Checking the 
 
 If you try to run your script while it is still running, you will see a message saying that the script is already running, and it will exit rather than run a second copy.
 
+<a name="license"></a>
+***
+###Legal Notices re GPLv3 Licensing
+
+    Copyright (C) 2012 April Lorenzen
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>
