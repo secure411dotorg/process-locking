@@ -3,7 +3,7 @@ LOCKSDIR="/home/ubuntu/locks"
 #
 # Nothing below here needs configuration
 #
-SCRIPTNAME=`echo "${0}"|rev|cut -d"/" -f1|rev`
+SCRIPTNAME=`echo "${0}"|rev|cut -d"/" -f1|rev|sed "s/$/$1.$2.$3/"`
 
 if [ -e "${LOCKSDIR}/$SCRIPTNAME.ok" ];then
         mv ${LOCKSDIR}/$SCRIPTNAME.ok ${LOCKSDIR}/$SCRIPTNAME.running
@@ -16,7 +16,9 @@ else
         else   
                 /usr/bin/logger "Creating $SCRIPTNAME.ok"
                 touch ${LOCKSDIR}/$SCRIPTNAME.ok
-                echo "Created the ok file - must be first time running. Exiting now - run again"
-                exit
+                echo "Created the ok file - must be first time running."
+        	mv ${LOCKSDIR}/$SCRIPTNAME.ok ${LOCKSDIR}/$SCRIPTNAME.running
+        	touch ${LOCKSDIR}/$SCRIPTNAME.running
+        	/usr/bin/logger "Starting $SCRIPTNAME" 
         fi
 fi
