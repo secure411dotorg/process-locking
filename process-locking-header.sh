@@ -3,7 +3,7 @@ LOCKSDIR="/var/lock"
 #
 # Nothing below here needs configuration
 #
-SCRIPTNAME=`echo "${0}"|rev|cut -d"/" -f1|rev|sed "s/\$/$1.$2.$3/"'; sed 's/[^[:alnum:],.]//g'`
+SCRIPTNAME=`echo "${0}"|rev|cut -d"/" -f1|rev|sed -e "s/\$/$1.$2.$3/"'; s/[^[:alnum:],.]//g; s/\.\.*/./g; s/.$//'`
 
 if [ -e "${LOCKSDIR}/$SCRIPTNAME.ok" ];then
         mv ${LOCKSDIR}/$SCRIPTNAME.ok ${LOCKSDIR}/$SCRIPTNAME.running
