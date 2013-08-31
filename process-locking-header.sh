@@ -1,5 +1,5 @@
 # Configure your preferred lock file dir:
-LOCKSDIR="/home/ubuntu/locks" 
+LOCKSDIR="/var/lock" 
 #
 # Nothing below here needs configuration
 #
