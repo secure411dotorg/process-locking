@@ -1,3 +1,3 @@
-touch /home/ubuntu/locks/$SCRIPTNAME.ok
-rm /home/ubuntu/locks/$SCRIPTNAME.running
+touch "$LOCKSDIR/$SCRIPTNAME.ok"
+rm "$LOCKSDIR/$SCRIPTNAME.running"
 /usr/bin/logger "Endofrun $SCRIPTNAME"
