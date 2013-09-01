@@ -28,11 +28,15 @@ Do not end the path with a /
 
 Near the top of your script (but below #!/bin/bash), insert a line such as:
 
-```source /path/to/process-locking-header.sh```
+```
+source /path/to/process-locking-header.sh
+```
 
 At the bottom of your script, insert a line such as:
 
-```source /path/to/process-locking-footer.sh```
+```
+source /path/to/process-locking-footer.sh
+```
 
 Run your script once. It will not execute other than to create one file in the process locking dir.
 
@@ -40,7 +44,16 @@ The next time your script runs, it will fully execute as expected. Checking the 
 
 If you try to run your script while it is still running, you will see a message saying that the script is already running, and it will exit rather than run a second copy.
 
+### TO CREATE LOCKS PER USER
+If you want to lock execution so each user can run only one instance of a script instead of one instance for all users, make the following modifications to process-locking-header.sh:
+
+```
+LOCKSDIR=/var/lock/$USER
+mkdir -p "$LOCKSDIR"	#Creates the path if it does not exist
+```
+
 <a name="license"></a>
+
 ***
 ###Legal Notices re GPLv3 Licensing
 
