@@ -6,11 +6,10 @@ RM_OLD_OK_TS="48 hours ago"
 # Nothing below here needs configuration
 #
 
-SCRIPTNAME_NOARGS=`echo "$0"|rev|cut -d'/' -f1|rev|sed 's/[[^:alnum:]\-_]//g'`
+SCRIPTNAME_NOARGS=`echo "$0"|rev|cut -d'/' -f1|rev|sed 's/[^[:alnum:]_.\-]//g'`
 
-SCRIPTNAME=`echo "${0}"|rev|cut -d"/" -f1|rev|sed -e "s/\$/$1.$2.$3/"'; s/[[^:alnum:]_\-]//g; s/\.\.*/./g; s/.$//'`
-echo "$SCRIPTNAME"
-echo "$SCRIPTNAME_NOARGS"
+SCRIPTNAME=`echo "${0}"|rev|cut -d"/" -f1|rev|sed -e "s/\$/.$1.$2.$3/"'; s/[^[:alnum:]._\-]//g; s/\.\.*/./g; s/.$//'`
+
 if [ -e "${LOCKSDIR}/${SCRIPTNAME}.ok" ];then
         mv "${LOCKSDIR}/${SCRIPTNAME}.ok" "${LOCKSDIR}/${SCRIPTNAME}.running"
         touch "${LOCKSDIR}/${SCRIPTNAME}.running"
