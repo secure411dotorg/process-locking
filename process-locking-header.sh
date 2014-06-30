@@ -1,18 +1,42 @@
+# A value of true for HASHARGS4LOCK will allow the same script to run with different args
+# We are using true temporary while we transition our scripts to set true explicitly
+HASHARGS4LOCK="${HASHARGS4LOCK:-true}"
 # Configure your preferred lock file dir:
-LOCKSDIR="/var/lock" 
+LOCKSDIR="/var/lock"
 # Remove ok files created before RM_OLD_OK_TS for SCRIPTNAME_NOARGS
-RM_OLD_OK_TS="48 hours ago"	
+RM_OLD_OK_TS="48 hours ago"
 #
 # Nothing below here needs configuration
 #
 
-SCRIPTNAME_NOARGS=`echo "${0##*/}"|sed 's/[^[:alnum:]_.\-]//g'`
+SCRIPTNAME_NOARGS="${0##*/}"
 
-SCRIPTNAME=`echo "${SCRIPTNAME_NOARGS}.${1}.${2}.${3}" | sed -e 's/[^[:alnum:]._\-]//g; s/\.\.*/./g; s/.$//'`
+case ${HASHARGS4LOCK,,} in
+
+	0|t|true )	if [ "$#" = 0 ]; then
+				SCRIPTNAME="${0##*/}"
+			else
+				for i in /usr/bin/md5sum /sbin/md5 /bin/md5sum /usr/local/bin/md5sum "$(which md5sum || which md5)"; do
+					if [ -f "${i:-/dev/null/null}" ]; then
+						SCRIPTNAME="${0##*/}.$(echo "$@" | ${i} | awk '{print $1}')"
+						break
+					fi
+				done
+				if [ -z "${SCRIPTNAME}" ]; then
+					echo "Error: Unable to locate md5sum utility to hash arguments: ingoring args and limiting to 1 instance of script" 1>&2
+					SCRIPTNAME="${0##*/}"
+				fi
+			fi;;
+
+	1|f|false )	SCRIPTNAME="${0##*/}";;
+
+esac
 
 if [ -e "${LOCKSDIR}/${SCRIPTNAME}.ok" ];then
         mv "${LOCKSDIR}/${SCRIPTNAME}.ok" "${LOCKSDIR}/${SCRIPTNAME}.running" 1>&2
         echo "$$" > "${LOCKSDIR}/${SCRIPTNAME}.running"
+	# Include script arguments in .running file for better understanding of errors.
+	echo "Arguments: $@" >> "${LOCKSDIR}/${SCRIPTNAME}.running"
         /usr/bin/logger "Starting $SCRIPTNAME" 
 else   
         if [ -e "${LOCKSDIR}/${SCRIPTNAME}.running" ];then
