@@ -1,3 +1,3 @@
-echo "${SECONDS}" > "$LOCKSDIR/$SCRIPTNAME.ok"
-rm "$LOCKSDIR/$SCRIPTNAME.running"
+mv "$LOCKSDIR/$SCRIPTNAME.running" "$LOCKSDIR/$SCRIPTNAME.ok"
+echo "SECONDS:${SECONDS}" >> "$LOCKSDIR/$SCRIPTNAME.ok"
 /usr/bin/logger "Endofrun $SCRIPTNAME"

@@ -34,9 +34,9 @@ esac
 
 if [ -e "${LOCKSDIR}/${SCRIPTNAME}.ok" ];then
         mv "${LOCKSDIR}/${SCRIPTNAME}.ok" "${LOCKSDIR}/${SCRIPTNAME}.running" 1>&2
-        echo "$$" > "${LOCKSDIR}/${SCRIPTNAME}.running"
+        echo "PID:$$" > "${LOCKSDIR}/${SCRIPTNAME}.running"
 	# Include script arguments in .running file for better understanding of errors.
-	echo "Arguments: $@" >> "${LOCKSDIR}/${SCRIPTNAME}.running"
+	echo "ARGUMENTS:$@" >> "${LOCKSDIR}/${SCRIPTNAME}.running"
         /usr/bin/logger "Starting $SCRIPTNAME" 
 else   
         if [ -e "${LOCKSDIR}/${SCRIPTNAME}.running" ];then
