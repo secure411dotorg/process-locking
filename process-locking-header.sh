@@ -7,6 +7,8 @@ PLOCKLOG="${PLOCKLOG:-true}"
 HASHARGS4LOCK="${HASHARGS4LOCK:-true}"
 # Configure your preferred lock file dir:
 LOCKSDIR="/var/lock"
+# FIXME the RM old ok ts is hard coded which is incompatible with getting updates for the process-locking repo if you change it locally
+# all vars should work with vars specified in the script that sources them. 
 # Remove ok files created before RM_OLD_OK_TS for SCRIPTNAME_NOARGS
 RM_OLD_OK_TS="48 hours ago"
 #
