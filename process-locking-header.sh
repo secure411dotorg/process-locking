@@ -11,7 +11,7 @@ RM_OLD_OK_TS="48 hours ago"
 
 SCRIPTNAME_NOARGS="${0##*/}"
 
-case ${HASHARGS4LOCK,,} in
+case "$( echo "${HASHARGS4LOCK}" | tr '[A-Z]' '[a-z]' )" in
 
 	0|t|true )	if [ "$#" = 0 ]; then
 				SCRIPTNAME="${0##*/}"
