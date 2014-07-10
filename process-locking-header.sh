@@ -1,8 +1,14 @@
+# PLOCKLOG on by default should be turned off for high volume scripts to prevent filling /var/log
+PLOCKLOG="${PLOCKLOG:-true}"
+# FIXME there are 3 places here and one in footer that use the logger - please find a way to make them inactive if PLOCKLOG is false
+#
 # A value of true for HASHARGS4LOCK will allow the same script to run with different args
 # We are using true temporary while we transition our scripts to set true explicitly
 HASHARGS4LOCK="${HASHARGS4LOCK:-true}"
 # Configure your preferred lock file dir:
 LOCKSDIR="/var/lock"
+# FIXME the RM old ok ts is hard coded which is incompatible with getting updates for the process-locking repo if you change it locally
+# all vars should work with vars specified in the script that sources them. 
 # Remove ok files created before RM_OLD_OK_TS for SCRIPTNAME_NOARGS
 RM_OLD_OK_TS="48 hours ago"
 #
