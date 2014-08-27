@@ -1,7 +1,8 @@
 # PLOCKLOG on by default should be turned off for high volume scripts to prevent filling /var/log
 # A value of 1, f, or false will shut off the use of /usr/bin/logger at the start and end
 PLOCKLOG="${PLOCKLOG:-true}"
-
+# Exit status number for process already running
+PLOCKEXIT="${PLOCKEXIT:-221}"
 # Limit to the number of args that will be saved to the .running and .ok files if number of args is exceeded
 # only the number of args will be saved
 PLARGLIMIT="${PLARGLIMIT:-20}"
@@ -78,7 +79,7 @@ if [ -e "${LOCKSDIR}/${SCRIPTNAME}.ok" ];then
 else   
         if [ -e "${LOCKSDIR}/${SCRIPTNAME}.running" ];then
                 echo "Exiting because process is already running" 1>&2
-                exit
+                exit "${PLOCKEXIT}"
         else   
                 ${PLOCKLOG} "Creating ${SCRIPTNAME}.ok"
                 touch "${LOCKSDIR}/${SCRIPTNAME}.ok"
