@@ -8,7 +8,9 @@ bash - Prevent a process from running multiple times
 ***
 ###PROBLEM INTENDED TO SOLVE:
 
-I need to run bash scripts on crontab, some even every minute. They may take longer than a minute to run, and they need to run again as soon as the last run successfully completes. I have tried many different solutions to this and finally wrote this universal header and footer file because every other solution failed at one time or another. 
+I need to run bash scripts on crontab, some even every minute. They may take longer than a minute to run, and they need to run again as soon as the last run successfully completes. If the crontab starts a script again before the last run completes, disaster can result by many copies of the same script running, overwriting and corrupting the output files, and eventually slowing the server to a crawl or crashing the whole server by thousands of copies of a script trying to run at the same time. The problem only gets worse as the server load increases and each running copy does not complete by the time yet another is ordered to start by crontab.
+
+I have tried many different solutions to this and finally wrote this universal header and footer file because every other solution failed at one time or another. 
 
 The centralized lock file dir lets me see at a glance which of my scripts are running and for how long. The logging gives the opportunity for potential automated graphing and monitoring of process duration / status.
 
