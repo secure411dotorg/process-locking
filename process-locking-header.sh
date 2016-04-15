@@ -28,6 +28,24 @@ SCRIPTNAME_NOARGS="${0##*/}"
 
 case "$( echo "${HASHARGS4LOCK}" | tr '[A-Z]' '[a-z]' )" in
 
+	custom	)	if [ -z "${SCRIPTNAME}" ]; then
+				echo "Warning: HASHARGS4LOCK is set to custom and SCRIPTNAME is null, falling back to HASHARGS4LOCK=true" 1>&2
+				if [ "$#" = 0 ]; then
+					SCRIPTNAME="${0##*/}"
+				else
+					for i in /usr/bin/md5sum /sbin/md5 /bin/md5sum /usr/local/bin/md5sum "$(which md5sum || which md5)"; do
+						if [ -f "${i:-/dev/null/null}" ]; then
+							SCRIPTNAME="${0##*/}.$(echo "$@" | ${i} | awk '{print $1}')"
+							break
+						fi
+					done
+					if [ -z "${SCRIPTNAME}" ]; then
+						echo "Error: Unable to locate md5sum utility to hash arguments: ingoring args and limiting to 1 instance of script" 1>&2
+						SCRIPTNAME="${0##*/}"
+					fi
+				fi
+			fi;;
+
 	0|t|true )	if [ "$#" = 0 ]; then
 				SCRIPTNAME="${0##*/}"
 			else
