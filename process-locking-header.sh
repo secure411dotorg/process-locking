@@ -69,7 +69,8 @@ case "$( echo "${PLOCKLOG:-true}" | tr '[A-Z]' '[a-z]' )" in
 
 	0|t|true )	PLOCKLOG="/usr/bin/logger";;
 
-	1|f|false )	PLOCKLOG="/usr/bin/true";;
+	# /bin/true could be in /usr/bin/true, so I have opted for the : built-in which does the same thing
+	1|f|false )	PLOCKLOG=":";;
 
 	*	)	echo "Unrecognized value for PLOCKLOG: ${PLOCKLOG}: Logging remains on." 1>&2
 			PLOCKLOG="/usr/bin/logger";;
