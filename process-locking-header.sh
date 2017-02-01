@@ -10,6 +10,27 @@ PLARGLIMIT="${PLARGLIMIT:-20}"
 # Limit to the number of characters saved from args
 PLARGCHARS="${PLARGCHARS:-1000}"
 
+#Using a function allows the use of local variables to avoid cluttering the variable namespace
+function sleepB4PL () {
+	local RSLEEP_MAX="${RSLEEP_MAX:-0}"
+	if [ "${RSLEEP_MAX}" -gt 59 ]; then
+		echo "WARNING: RSLEEP_MAX must never be set to greater than the crontab interval.  To prevent this warning, set to below 60" 1>&2
+	fi
+	local RSLEEPTIME="${RANDOM:0:${#RSLEEP_MAX}}"
+	while [ "${RSLEEPTIME}" -gt "${RSLEEP_MAX}" ]; do
+		RSLEEPTIME="$((RSLEEPTIME-RSLEEP_MAX))"
+	done
+	echo "Delaying for ${RSLEEPTIME} seconds..." 1>&2
+	sleep "${RSLEEPTIME}"
+}
+#Add a random sleep before checking lock status from 0-59 seconds (larger numbers are honored but will display warning)
+#NOTE: The intended purpose of this feature is to allow running scripts with different args that share the same lock
+# to retry at random times within the same minute.  The sleep is randomish, so one script may run more frequently
+# than others on the same interval.
+
+if [ "${RSLEEP_MAX:-0}" -gt 0 ]; then
+	sleepB4PL
+fi
 # A value of true for HASHARGS4LOCK will allow the same script to run with different args
 # We are using true temporary while we transition our scripts to set true explicitly
 HASHARGS4LOCK="${HASHARGS4LOCK:-true}"
