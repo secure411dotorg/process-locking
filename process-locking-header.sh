@@ -125,7 +125,7 @@ else
                 touch "${LOCKSDIR}/${SCRIPTNAME}.ok"
                 echo "Created the ok file - must be first time running." 1>&2
         	mv "${LOCKSDIR}/$SCRIPTNAME.ok" "${LOCKSDIR}/${SCRIPTNAME}.running"
-        	echo "$$" > "${LOCKSDIR}/${SCRIPTNAME}.running"
+        	echo "PID:$$" > "${LOCKSDIR}/${SCRIPTNAME}.running"
 		if [ "$#" -le "${PLARGLIMIT}" ]; then
 			PLARGSTEMP="$@"
 			if [ "${#PLARGSTEMP}" -gt "${PLARGCHARS}" ]; then
