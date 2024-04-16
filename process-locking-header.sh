@@ -34,9 +34,22 @@ fi
 # A value of true for HASHARGS4LOCK will allow the same script to run with different args
 # We are using true temporary while we transition our scripts to set true explicitly
 HASHARGS4LOCK="${HASHARGS4LOCK:-true}"
+
 # Configure your preferred lock file dir:
 # On most systems /var/lock is cleared on reboot, which is often good.
 LOCKSDIR="${LOCKSDIR:-/var/lock}"
+
+# Test if you can write to the lock file dir
+TESTFILE="${LOCKSDIR}/test_write$$.tmp"
+
+touch "$TESTFILE" 2>/dev/null && rm "$TESTFILE" 2>/dev/null
+if [ $? -ne 0 ]; then
+  # If not writable, use /tmp/lock instead
+  LOCKSDIR="/tmp/lock"
+  # Ensure /tmp/lock exists
+  mkdir -p "$LOCKSDIR"
+fi
+
 # FIXME the RM old ok ts is hard coded which is incompatible with getting updates for the process-locking repo if you change it locally
 # all vars should work with vars specified in the script that sources them. 
 # Remove ok files created before RM_OLD_OK_TS for SCRIPTNAME_NOARGS
